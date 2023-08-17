@@ -220,7 +220,7 @@ To create the composition:
         - fromConnectionSecretKey: username
         - fromConnectionSecretKey: password
         - name: host
-          fromConnectionSecretKey: endpoint
+          fromConnectionSecretKey: address
         - fromConnectionSecretKey: port
         name: instance
         patches:
