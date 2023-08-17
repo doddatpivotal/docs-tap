@@ -1,0 +1,40 @@
+# Known issues for Application Single Sign-On
+
+This topic describes known limitations and workarounds related to working with 
+Application Single Sign-On (commonly called AppSSO). For further troubleshooting 
+guidance, see [Troubleshoot Application Single Sign-on](../how-to-guides/troubleshoot.hbs.md).
+
+## <a id="clientregistrations"></a> Limited number of `ClientRegistrations` per `AuthServer`
+
+The number of `ClientRegistration` for an `AuthServer` is limited at
+arond 2,000. This is a soft limitation. If you attempt to apply more
+`ClientRegistration` resources than the limit, VMware cannot ensure those
+clients applied past the limit to work as expected. This is subject to
+change in future product versions.
+
+## <a id="letsencrypt"></a> LetsEncrypt: domain name for Issuer URI limited to 64 characters maximum
+
+If you use LetsEncrypt to issue TLS certificates for an `AuthServer`, the domain
+name for the Issuer URI (excluding the `http{s}` prefix) cannot exceed 64
+characters in length. If exceeded, you might receive a LetsEncrypt specific error
+during the certificate issuance process. You might observe this limitation when your
+base domain and subdomain joined together exceed the maximum limit.
+
+If your default Issuer URI is too long, use the
+`domain_template` field in Application Single Sign-On values YAML to shorten the
+domain.
+
+For example, you can forgo the namespace in the Issuer URI as follows:
+
+```yaml
+domain_template: "\{{.Name}}.\{{.Domain}}"
+```
+
+> **Caution** By leaving out the namespace in your domain template, application
+> routes might conflict if there are multiple `AuthServer`s with the same name
+> but in different namespaces.
+
+## <a id='classclaim'></a> `ClassClaim` credential propagation time
+
+It can take up 60 to 120 seconds for the client credentials to propagate up into a
+`ClassClaim`'s service binding secret.

@@ -1,3 +1,13 @@
 ---
 template_variables:
-  tap_version: 1.2.0
+  tap_version: 1.7.0
+  url_version: 1.7
+  hide_content: true
+  staging_toggle: docs-staging
+  app-sso:
+    version: 5.0
+  tanzu-cli:
+    version: 0.90.1
+    url_version: 0.90.0
+
+
